@@ -2,15 +2,17 @@ const mongoose = require( 'mongoose' );
 const Sessions = mongoose.model('Sessions');
 const Users = mongoose.model('User');
 const formatSession = require('../utils/formatSession');
-const getUserAsynch = require('../utils/getUserAsynch');
+const {getUserAsynch,getAddedUsersAsynch} = require('../utils/getUserAsynch');
 const createSession = async (req, res, next) => {
-    //let users = req.body;
+    let users = req.body;
     const currentUser = res.locals.claims;
     let SessionInitailize = formatSession();
     try{
         const foundUser = await getUserAsynch(currentUser);
+        const addedUsers = await getAddedUsersAsynch(users);
         const newSession  = await Sessions.create( SessionInitailize );
         newSession.users.push(foundUser._id);
+        addedUsers.forEach((user)=>newSession.users.push(user._id));
         const updatedSession = await Sessions.findOneAndUpdate({_id:newSession._id},newSession);
         res.status( 201 ).json( updatedSession );
     }

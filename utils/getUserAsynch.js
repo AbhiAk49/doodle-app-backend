@@ -12,5 +12,17 @@ const getUserAsynch = async (user) => {
       return founduser;
     }
   };
+
+const getAddedUsersAsynch = async (usersArray) => {
+    const users = await Users.find({
+      name: { $in : usersArray }
+    });
+  
+    if (!users) {
+      throw new NotFoundError(`User NOT_FOUND`);
+    } else {
+      return users;
+    }
+  };
  
-  module.exports = getUserAsynch
+  module.exports = { getUserAsynch,getAddedUsersAsynch }
