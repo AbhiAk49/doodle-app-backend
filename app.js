@@ -21,13 +21,6 @@ app.use( express.json() );
 
 app.use( express.urlencoded( { extended: false } ) );
 
-app.use( '/auth', authRouter );
-app.use( '/users', usersRouter );
-app.use('/newDoodle',sessionsRouter);
-
-app.use( pageNotFoundHandler );
-app.use( errorHandler );
-
 server.listen( PORT, error => {
     if( error ) {
         return console.error( error.message );
@@ -37,38 +30,45 @@ server.listen( PORT, error => {
 
 io.on('connection',(socket)=>{
 
-    socket.on('joinSession',async (room,user) => {
+    socket.on('subscribe',async (room,user) => {
         try{
             const foundUser = await Users.findOne({email:user}).select('email name');
             console.log(`${foundUser.name} joined!`);
             socket.join(room);
-            socket.to(room).emit('user-join',foundUser);
+            socket.in(room).emit('user-join',room,foundUser);
             //socket.emit('startSession','New session started!');
             //socket.broadcast.emit('userJoined',`Socket ${socket.id} connected`)
-            socket.on('canvas-data',(data)=>{
-                socket.to(room).emit('canvas-data',data);
-                socket.to(room).emit('sync-data',data);
-            });
-            socket.on('canvas-clear',()=>{
-                socket.to(room).emit('canvas-clear');
-            });
-            socket.on('leave',async(user)=>{
-                try{
-                    const userLeave = await Users.findOne({email:user}).select('email name');
-                    socket.leave(room);
-                    socket.to(room).emit('user-left',userLeave);
-                    console.log(`${userLeave.name} left.`);
-                }
-                catch(err){
-                    console.log(err);
-                }
-            })
         }
         catch(err){
             console.log(err);
         }
     });
-    socket.on('disconnect', () => {
-        console.log(`${socket.id} disconnected`);
+    socket.on('canvas-data',(room,data) =>{
+            socket.in(room).emit('canvas-data',room,data);
+        //socket.to(room).emit('sync-data',data);
     });
-})
+    socket.on('canvas-clear',(room) => {
+        socket.in(room).emit('canvas-clear',room);
+    });
+    socket.on('leave',async(room,user) => {
+        try{
+            const userLeave = await Users.findOne({email:user}).select('email name');
+            socket.leave(room);
+            socket.in(room).emit('user-left',room,userLeave);
+            console.log(`${userLeave.name} left.`);
+        }
+        catch(err){
+            console.log(err);
+        }
+    });
+    // socket.on('disconnect', () => {
+    //     console.log(`${socket.id} disconnected`);
+    // });
+});
+
+app.use( '/auth', authRouter );
+app.use( '/users', usersRouter );
+app.use('/sessions',sessionsRouter);
+
+app.use( pageNotFoundHandler );
+app.use( errorHandler );

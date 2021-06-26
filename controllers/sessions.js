@@ -52,7 +52,7 @@ const getSessions = async (req, res, next) => {
     const currentUser = res.locals.claims;
     let updatedSessions = [];
     try{
-        const userSessions = await Sessions.find({})
+        await Sessions.find({})
             .populate({
                 path: 'users',
                 select: 'name email',
@@ -82,8 +82,26 @@ const getSessions = async (req, res, next) => {
         return next( err );
     }
 }
+
+const deleteSession = (req, res, next) => {
+    const sessionId = req.query.sessionID;
+    Sessions.findByIdAndDelete(sessionId)
+        .then(removed=>{
+            res.status( 201 ).json( removed );
+        })
+        .catch((err)=>{
+            if( err.name === 'ValidationError' ){
+                err.status = 400;
+            }else {
+                err.status = 500;
+            }
+    
+            return next( err );
+        })
+}
 module.exports = {
     createSession,
     getSessions,
-    getAllSessions
+    getAllSessions,
+    deleteSession
 }
