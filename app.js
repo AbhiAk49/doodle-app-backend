@@ -8,6 +8,7 @@ const Users = mongoose.model('User');
 const authRouter = require( './routes/auth' );
 const usersRouter = require( './routes/users' );
 const sessionsRouter = require('./routes/sessions');
+const doodlesRouter = require('./routes/doodles');
 const { pageNotFoundHandler, errorHandler } = require( './middleware/error-handlers' );
 const PORT = process.env.PORT || 3000;
 // const ALLOWED_ORIGINS = [
@@ -29,15 +30,12 @@ server.listen( PORT, error => {
 } );
 
 io.on('connection',(socket)=>{
-
     socket.on('subscribe',async (room,user) => {
         try{
             const foundUser = await Users.findOne({email:user}).select('email name');
             console.log(`${foundUser.name} joined!`);
             socket.join(room);
             socket.in(room).emit('user-join',room,foundUser);
-            //socket.emit('startSession','New session started!');
-            //socket.broadcast.emit('userJoined',`Socket ${socket.id} connected`)
         }
         catch(err){
             console.log(err);
@@ -61,14 +59,16 @@ io.on('connection',(socket)=>{
             console.log(err);
         }
     });
-    // socket.on('disconnect', () => {
-    //     console.log(`${socket.id} disconnected`);
-    // });
+    socket.on('terminate-session',(room) =>{
+        socket.in(room).emit('terminate-session',room);
+});
+    
 });
 
 app.use( '/auth', authRouter );
 app.use( '/users', usersRouter );
 app.use('/sessions',sessionsRouter);
+app.use('/doodles',doodlesRouter);
 
 app.use( pageNotFoundHandler );
 app.use( errorHandler );

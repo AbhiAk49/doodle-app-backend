@@ -1,11 +1,12 @@
 const mongoose = require( 'mongoose' );
 
-const sessionSchema = new mongoose.Schema({
+const doodleSchema = new mongoose.Schema({
+    title: { type: String },
     time: { type: String , required: true},
     date: { type: String , required: true},
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    currentlyActive : { type : Boolean , default : true}
-}
-)
+    img64 : { type : String , required : true}
+})
 
-mongoose.model( 'Sessions', sessionSchema );
+
+mongoose.model( 'Doodle', doodleSchema );

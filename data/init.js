@@ -2,6 +2,7 @@ const mongoose = require( 'mongoose' );
 
 require( '../models/User' );
 require( '../models/Sessions' );
+require( '../models/Doodle' );
 
 
 const uri = 'mongodb://localhost:27017/doodleDB';
