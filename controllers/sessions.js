@@ -48,11 +48,45 @@ const getAllSessions = async (req, res, next) => {
     }
 }
 
-const getSessions = async (req, res, next) => {
+const getActiveSessions = async (req, res, next) => {
     const currentUser = res.locals.claims;
     let updatedSessions = [];
     try{
-        await Sessions.find({})
+        await Sessions.find({"currentlyActive": true})
+            .populate({
+                path: 'users',
+                select: 'name email',
+            })
+            .then(sessions=>{
+                sessions.forEach(session => {
+                    let flag = false;
+                    session.users.forEach(user=>{
+                        if(user.email === currentUser.email){
+                            flag = true;
+                        }
+                    })
+                    if(flag){
+                        updatedSessions.push(session);
+                    }
+                })
+            })
+        res.status( 201 ).json( updatedSessions );
+    }
+    catch(err){
+                if( err.name === 'ValidationError' ){
+            err.status = 400;
+        }else {
+            err.status = 500;
+        }
+
+        return next( err );
+    }
+}
+const getInactiveSessions = async (req, res, next) => {
+    const currentUser = res.locals.claims;
+    let updatedSessions = [];
+    try{
+        await Sessions.find({"currentlyActive": false})
             .populate({
                 path: 'users',
                 select: 'name email',
@@ -99,9 +133,11 @@ const deleteSession = (req, res, next) => {
             return next( err );
         })
 }
+
 module.exports = {
     createSession,
-    getSessions,
+    getActiveSessions,
     getAllSessions,
-    deleteSession
+    deleteSession,
+    getInactiveSessions
 }

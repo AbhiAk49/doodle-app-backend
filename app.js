@@ -43,7 +43,6 @@ io.on('connection',(socket)=>{
     });
     socket.on('canvas-data',(room,data) =>{
             socket.in(room).emit('canvas-data',room,data);
-        //socket.to(room).emit('sync-data',data);
     });
     socket.on('canvas-clear',(room) => {
         socket.in(room).emit('canvas-clear',room);

@@ -10,8 +10,8 @@ const createDoodle = async (req, res, next) => {
     const currentUser = res.locals.claims;
     try{
         const session = await Sessions.findByIdAndUpdate(sessionId, { "currentlyActive" : false});
-        if(title===undefined){
-            title = moment(session.date,'DD/MM/YYYY');
+        if(title===""){
+            title = session.date;
         }
         const doodle = 
         {
@@ -70,7 +70,26 @@ const getDoodles = async (req, res, next) => {
         return next( err );
     }
 }
+
+const deleteDoodle = (req, res, next) => {
+    const doodleID = req.query.doodleID;
+    Doodle.findByIdAndDelete(doodleID)
+        .then(removed=>{
+            res.status( 201 ).json( removed );
+        })
+        .catch((err)=>{
+            if( err.name === 'ValidationError' ){
+                err.status = 400;
+            }else {
+                err.status = 500;
+            }
+    
+            return next( err );
+        })
+}
+
 module.exports = {
     createDoodle,
-    getDoodles
+    getDoodles,
+    deleteDoodle
 }
