@@ -4,19 +4,23 @@ require( '../models/User' );
 require( '../models/Sessions' );
 require( '../models/Doodle' );
 
+const {NODE_ENV,DB_HOST,DB_NAME} = process.env;
 
-const uri = 'mongodb://localhost:27017/doodleDB';
+const connectionStr = NODE_ENV === 'development' ? `mongodb://${DB_HOST}/${DB_NAME}` : '';
+console.log(connectionStr);
+console.log(`Connecting to database ${DB_NAME}`);
+
 
 mongoose.set( 'useFindAndModify', false );
 mongoose.set( 'returnOriginal', false );
 
-mongoose.connect( uri, { useNewUrlParser: true, useUnifiedTopology: true } );
+mongoose.connect( connectionStr, { useNewUrlParser: true, useUnifiedTopology: true } );
 
 mongoose.connection.on( 'open', () => {
-    console.log( 'Connected to DB' )
+    console.log( `Connected to database ${DB_NAME}` )
 } );
 
 mongoose.connection.on( 'error', () => {
-    console.error( err.message );
+    console.error( `Could not connect to database ${DB_NAME}, error = `,  err.message );
     process.exit( 1 );
 } )

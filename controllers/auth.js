@@ -2,7 +2,7 @@ const mongoose = require( 'mongoose' );
 const jwt = require( 'jsonwebtoken' );
 
 const User = mongoose.model( 'User' );
-
+const JWT_SECRET = process.env.JWT_SECRET;
 const register = ( req, res, next ) => {
     const user = req.body;
 
@@ -69,7 +69,7 @@ const login = ( req, res, next ) => {
                     role: user.role
                 };
 
-                jwt.sign( claims, 'asdf' /* process.env.JWT_SECRET */, { expiresIn: 24 * 60 * 60 }, ( err, token ) => {
+                jwt.sign( claims, JWT_SECRET, { expiresIn: 24 * 60 * 60 }, ( err, token ) => {
                     if( err ) {
                         err.status = 500;
                         return next( err );

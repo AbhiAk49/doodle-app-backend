@@ -1,4 +1,5 @@
-require( './data/init' )
+require('dotenv').config();
+require( './data/init' );
 const mongoose = require('mongoose');
 const cors = require('cors'); 
 const express = require( 'express' );
@@ -64,10 +65,10 @@ io.on('connection',(socket)=>{
     
 });
 
-app.use( '/auth', authRouter );
-app.use( '/users', usersRouter );
-app.use('/sessions',sessionsRouter);
-app.use('/doodles',doodlesRouter);
+app.use( '/api/auth', authRouter );
+app.use( '/api/users', usersRouter );
+app.use('/api/sessions',sessionsRouter);
+app.use('/api/doodles',doodlesRouter);
 
 app.use( pageNotFoundHandler );
 app.use( errorHandler );
