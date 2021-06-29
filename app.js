@@ -1,6 +1,7 @@
 require('dotenv').config();
 require( './data/init' );
 const mongoose = require('mongoose');
+const path = require('path');
 const cors = require('cors'); 
 const express = require( 'express' );
 const http  = require('http');
@@ -18,7 +19,12 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-app.use(cors());
+if(process.env=== 'development'){
+    app.use(cors());
+}
+
+app.use(express.static(path.join(process.cwd(),'public')))
+
 app.use( express.json() );
 
 app.use( express.urlencoded( { extended: false } ) );
@@ -69,6 +75,9 @@ app.use( '/api/auth', authRouter );
 app.use( '/api/users', usersRouter );
 app.use('/api/sessions',sessionsRouter);
 app.use('/api/doodles',doodlesRouter);
+app.use( '/api',pageNotFoundHandler );
+app.use( '/api',errorHandler );
 
-app.use( pageNotFoundHandler );
-app.use( errorHandler );
+app.use(function(req,res,next){
+    res.sendFile(path.join(process.cwd(),'public','index.html'));
+})
