@@ -32,5 +32,9 @@ Shows cards for each session available, if any, each session can be joined by jo
 Sessions can also be deleted if required.
 >Note : Deleted Session can only be deleted by the host who created it. If deleted, session disappears from the other users too.
 
-#### 3. Past Sessions
-If session was ended
+#### 3. Previous Sessions
+If session was ended, it will be added to the this dropdown to view the history of sessions. 
+Past sessions cleared will also be deleted from others's history too.
+
+### Doodle Canvas Page
+
