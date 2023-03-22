@@ -10,7 +10,8 @@ npm install
 npm run start
 ```
 # Deployed Project 
-- Deployed using Heroku App - [https://doodle-coop.herokuapp.com/](https://doodle-coop.herokuapp.com/)
+- Deployed using Heroku App - [https://doodle-coop.herokuapp.com/](https://doodle-coop.herokuapp.com/) (Deprecated)
+- Deployed (Socket issue) Render App - [https://doodle-backend.onrender.com/](https://doodle-backend.onrender.com/)
 
 # Documentation
 ### Register for New User
