@@ -1,8 +1,8 @@
-const moment  = require('moment');
+const moment = require('moment')
 function formatSession() {
     return {
         time: moment().format('h:mm a'),
-        date: moment().format('DD/MM/YYYY')
+        date: moment().format('DD/MM/YYYY'),
     }
 }
 

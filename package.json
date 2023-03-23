@@ -1,26 +1,28 @@
 {
-  "name": "doodle-app-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon ."
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
-    "mongoose": "^5.12.13",
-    "nodemon": "^2.0.7",
-    "socket-io": "^1.0.0",
-    "socket.io": "^4.1.2"
-  },
-  "devDependencies": {
-    "cors": "^2.8.5"
-  }
+    "name": "doodle-app-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon .",
+        "pretty": "prettier --write ."
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "moment": "^2.29.1",
+        "mongoose": "^5.12.13",
+        "nodemon": "^2.0.7",
+        "prettier": "^2.8.6",
+        "socket-io": "^1.0.0",
+        "socket.io": "^4.1.2"
+    },
+    "devDependencies": {
+        "cors": "^2.8.5"
+    }
 }

@@ -1,28 +1,28 @@
-const mongoose = require( 'mongoose' );
-const Users = mongoose.model('User'); 
+const mongoose = require('mongoose')
+const Users = mongoose.model('User')
 
 const getUserAsynch = async (user) => {
     const founduser = await Users.findOne({
-      email: user.email
-    });
-  
+        email: user.email,
+    })
+
     if (!founduser) {
-      throw new NotFoundError(`User NOT_FOUND`);
+        throw new NotFoundError(`User NOT_FOUND`)
     } else {
-      return founduser;
+        return founduser
     }
-  };
+}
 
 const getAddedUsersAsynch = async (usersArray) => {
     const users = await Users.find({
-      name: { $in : usersArray }
-    });
-  
+        name: { $in: usersArray },
+    })
+
     if (!users) {
-      throw new NotFoundError(`User NOT_FOUND`);
+        throw new NotFoundError(`User NOT_FOUND`)
     } else {
-      return users;
+        return users
     }
-  };
- 
-  module.exports = { getUserAsynch,getAddedUsersAsynch }
+}
+
+module.exports = { getUserAsynch, getAddedUsersAsynch }
