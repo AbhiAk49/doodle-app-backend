@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-
+const jwt_secret = process.env.JWT_SECRET
 const authenticate = (req, res, next) => {
     const token = req.header('Authorization')
 
@@ -9,7 +9,7 @@ const authenticate = (req, res, next) => {
         return next(error)
     }
 
-    jwt.verify(token, 'asdf', (err, claims) => {
+    jwt.verify(token, jwt_secret, (err, claims) => {
         if (err) {
             const error = new Error('Go away intruder')
             error.status = 403

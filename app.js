@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
-if (process.env === 'development') {
+if (process.env.NODE_ENV === 'development') {
     app.use(cors())
 }
 
