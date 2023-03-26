@@ -15,7 +15,6 @@ const authenticate = (req, res, next) => {
             error.status = 403
             return next(error)
         }
-
         res.locals.claims = claims
         next()
     })
