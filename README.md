@@ -16,9 +16,9 @@ npm run start
 
 # Deployed Project
 
--   Deployed using Heroku App - [https://doodle-coop.herokuapp.com/](https://doodle-coop.herokuapp.com/) (Deprecated)
--   Deployed (Socket issue) Render App - [https://doodle-backend.onrender.com/](https://doodle-backend.onrender.com/)
--   Login Credentials (render) - abhiak49kumar@gmail.com, Abhishek@123
+- Deployed using Heroku App - [https://doodle-coop.herokuapp.com/](https://doodle-coop.herokuapp.com/) (Deprecated)
+- Deployed (Socket issue) Render App - [https://doodle-backend.onrender.com/](https://doodle-backend.onrender.com/)
+- Login Credentials (render) - abhiak49kumar@gmail.com, Abhishek@123
 
 # Documentation
 

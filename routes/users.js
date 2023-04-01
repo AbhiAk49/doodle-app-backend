@@ -1,10 +1,10 @@
-const express = require('express')
-const { getUsers } = require('../controllers/users')
+const express = require('express');
+const { getUsers } = require('../controllers/users');
 
-const authenticate = require('../middleware/auth')
+const authenticate = require('../middleware/auth');
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', authenticate, getUsers)
+router.get('/', authenticate, getUsers);
 
-module.exports = router
+module.exports = router;

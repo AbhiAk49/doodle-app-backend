@@ -1,9 +1,9 @@
-const moment = require('moment')
+const moment = require('moment');
 function formatSession() {
-    return {
-        time: moment().format('h:mm a'),
-        date: moment().format('DD/MM/YYYY'),
-    }
+  return {
+    time: moment().format('h:mm a'),
+    date: moment().format('DD/MM/YYYY'),
+  };
 }
 
-module.exports = formatSession
+module.exports = formatSession;
