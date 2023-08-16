@@ -18,7 +18,7 @@ npm run start
 
 - Deployed using Heroku App - [https://doodle-coop.herokuapp.com/](https://doodle-coop.herokuapp.com/) (Deprecated)
 - Deployed (Socket issue) Render App - [https://doodle-backend.onrender.com/](https://doodle-backend.onrender.com/)
-- Login Credentials (render) - abhiak49kumar@gmail.com, abhi2@gmail - Common Password - Abhishek@123
+- Login Credentials (render) - abhiak49kumar@gmail.com, abhi2@gmail.com - Common Password - Abhishek@123
 
 # Documentation
 
